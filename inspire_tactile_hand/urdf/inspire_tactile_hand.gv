@@ -1,0 +1,98 @@
+digraph G {
+node [shape=box];
+"world" [label="world"];
+"base_link" [label="base_link"];
+"Link01" [label="Link01"];
+"Link02" [label="Link02"];
+"Link03" [label="Link03"];
+"Link04" [label="Link04"];
+"Link05" [label="Link05"];
+"Link41" [label="Link41"];
+"Link42" [label="Link42"];
+"Link43" [label="Link43"];
+"Link44" [label="Link44"];
+"Link45" [label="Link45"];
+"Link46" [label="Link46"];
+"Link47" [label="Link47"];
+"Link48" [label="Link48"];
+"Link49" [label="Link49"];
+"Link50" [label="Link50"];
+"Link61" [label="Link61"];
+"Link62" [label="Link62"];
+"Link63" [label="Link63"];
+"Link64" [label="Link64"];
+"Link65" [label="Link65"];
+"Link71" [label="Link71"];
+"Link72" [label="Link72"];
+"Link73" [label="Link73"];
+"Link74" [label="Link74"];
+"Link75" [label="Link75"];
+"Link81" [label="Link81"];
+"Link82" [label="Link82"];
+"Link83" [label="Link83"];
+"Link84" [label="Link84"];
+"Link85" [label="Link85"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"world" -> "fixed" [label="xyz: 0.5 0.5 0.5 \nrpy: 3.14159 -0 0"]
+"fixed" -> "base_link"
+"base_link" -> "joint001" [label="xyz: -0.028069 0.0068497 -0.041587 \nrpy: 0 -0 0"]
+"joint001" -> "Link01"
+"Link01" -> "joint012" [label="xyz: -0.0024717 -0.00069757 -0.07078 \nrpy: 0 -0 0"]
+"joint012" -> "Link02"
+"Link02" -> "joint023" [label="xyz: -0.0040346 -0.00029252 -0.029576 \nrpy: 0 -0 0"]
+"joint023" -> "Link03"
+"Link03" -> "joint034" [label="xyz: -0.0016841 -0.017353 -0.038198 \nrpy: 0 -0 0"]
+"joint034" -> "Link04"
+"base_link" -> "joint005" [label="xyz: -0.033786 -0.0067159 -0.14085 \nrpy: 0 -0 0"]
+"joint005" -> "Link05"
+"base_link" -> "joint401" [label="xyz: 0.033577 -0.0119 -0.04755 \nrpy: 0 -0 0"]
+"joint401" -> "Link41"
+"Link41" -> "joint412" [label="xyz: -0.047038 -0.00018427 0 \nrpy: 0 -0 0"]
+"joint412" -> "Link42"
+"Link42" -> "joint423" [label="xyz: -0.01625 -6.3659e-05 -0.0065 \nrpy: 0 -0 0"]
+"joint423" -> "Link43"
+"Link43" -> "joint434" [label="xyz: -0.0078317 -0.015666 0.0069 \nrpy: 0 -0 0"]
+"joint434" -> "Link44"
+"Link44" -> "joint445" [label="xyz: 0.00088606 -0.011271 -0.00010738 \nrpy: 0 -0 0"]
+"joint445" -> "Link45"
+"Link45" -> "joint456" [label="xyz: -0.013096 -0.028586 -0.036244 \nrpy: 0 -0 0"]
+"joint456" -> "Link46"
+"Link46" -> "joint467" [label="xyz: -0.0077305 -0.0072703 -0.011331 \nrpy: 0 -0 0"]
+"joint467" -> "Link47"
+"Link47" -> "joint478" [label="xyz: -0.0026009 -0.0032704 -0.035056 \nrpy: 0 -0 0"]
+"joint478" -> "Link48"
+"Link44" -> "joint449" [label="xyz: -0.010887 -0.031082 -0.056915 \nrpy: 0 -0 0"]
+"joint449" -> "Link49"
+"Link43" -> "joint4350" [label="xyz: -0.0076736 -0.01292 -0.0026627 \nrpy: 0 -0 0"]
+"joint4350" -> "Link50"
+"base_link" -> "joint601" [label="xyz: -0.0093101 0.0068497 -0.0419 \nrpy: 0 -0 0"]
+"joint601" -> "Link61"
+"Link61" -> "joint612" [label="xyz: 0 -0.00067089 -0.07088 \nrpy: 0 -0 0"]
+"joint612" -> "Link62"
+"Link62" -> "joint623" [label="xyz: -0.003 -0.0002811 -0.029699 \nrpy: 0 -0 0"]
+"joint623" -> "Link63"
+"Link63" -> "joint634" [label="xyz: -0.0015 -0.017763 -0.038045 \nrpy: 0 -0 0"]
+"joint634" -> "Link64"
+"base_link" -> "joint605" [label="xyz: -0.01156 -0.0067159 -0.14129 \nrpy: 0 -0 0"]
+"joint605" -> "Link65"
+"base_link" -> "joint701" [label="xyz: 0.0075691 0.0068497 -0.041418 \nrpy: 0 -0 0"]
+"joint701" -> "Link71"
+"Link71" -> "joint712" [label="xyz: 0.0037717 -0.00038812 -0.07192 \nrpy: 0 -0 0"]
+"joint712" -> "Link72"
+"Link72" -> "joint723" [label="xyz: -0.0014405 -0.00016005 -0.029816 \nrpy: 0 -0 0"]
+"joint723" -> "Link73"
+"Link73" -> "joint734" [label="xyz: 0.00069906 -0.020824 -0.036228 \nrpy: 0 -0 0"]
+"joint734" -> "Link74"
+"base_link" -> "joint705" [label="xyz: 0.010545 -0.0067159 -0.14112 \nrpy: 0 -0 0"]
+"joint705" -> "Link75"
+"base_link" -> "joint801" [label="xyz: 0.024584 0.0068497 -0.040053 \nrpy: 0 -0 0"]
+"joint801" -> "Link81"
+"Link81" -> "joint812" [label="xyz: 0.0075062 -0.00032824 -0.071417 \nrpy: 0 -0 0"]
+"joint812" -> "Link82"
+"Link82" -> "joint823" [label="xyz: 0.0001209 -0.00013575 -0.029851 \nrpy: 0 -0 0"]
+"joint823" -> "Link83"
+"Link83" -> "joint834" [label="xyz: 0.0024318 -0.023668 -0.034617 \nrpy: 0 -0 0"]
+"joint834" -> "Link84"
+"base_link" -> "joint805" [label="xyz: 0.032726 -0.0067159 -0.13905 \nrpy: 0 -0 0"]
+"joint805" -> "Link85"
+}
