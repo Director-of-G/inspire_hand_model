@@ -11,11 +11,11 @@
       xyz="0.5 0.5 0.5"
       rpy="3.1415926 0 0" />
     <parent link="world"/>
-    <child link="base_link"/>
+    <child link="hand_base_link"/>
   </joint>
   
   <link
-    name="base_link">
+    name="hand_base_link">
     <inertial>
       <origin
         xyz="0.00040789 0.0043672 -0.042773"
@@ -100,7 +100,7 @@
       xyz="-0.028069 0.0068497 -0.041587"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link01" />
     <axis
@@ -290,8 +290,8 @@
   <joint
     name="joint003"
     type="revolute">
-    <pose relative_to = "base_link">-0.0345 -0.00015498 -0.14553 0 -1.5359 0</pose>
-    <parent>base_link</parent>
+    <pose relative_to = "hand_base_link">-0.0345 -0.00015498 -0.14553 0 -1.5359 0</pose>
+    <parent>hand_base_link</parent>
     <child>Link03</child>
     <axis>0 0 1</axis>
     <limit
@@ -349,7 +349,7 @@
       xyz="-0.033786 -0.0067159 -0.14085"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link05" />
     <axis
@@ -426,7 +426,7 @@
       xyz="0.033577 -0.0119 -0.04755"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link41" />
     <axis
@@ -1013,8 +1013,8 @@
   <joint
     name="joint0043"
     type="revolute">
-    <pose relative_to = "base_link">-0.027753 -0.01965 -0.04105 0 0 0</pose>
-    <parent>base_link</parent>
+    <pose relative_to = "hand_base_link">-0.027753 -0.01965 -0.04105 0 0 0</pose>
+    <parent>hand_base_link</parent>
     <child>Link43</child>
     <axis>0 0 -1</axis>
     <limit
@@ -1076,7 +1076,7 @@
       xyz="-0.0093101 0.0068497 -0.0419"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link61" />
     <axis
@@ -1266,8 +1266,8 @@
   <joint
     name="joint603"
     type="revolute">
-    <pose relative_to = "base_link">-0.01231 -0.00015498 -0.146 0 1.5708 0</pose>
-    <parent>base_link</parent>
+    <pose relative_to = "hand_base_link">-0.01231 -0.00015498 -0.146 0 1.5708 0</pose>
+    <parent>hand_base_link</parent>
     <child>Link63</child>
     <axis>0 0 1</axis>
     <limit
@@ -1325,11 +1325,11 @@
       xyz="-0.01156 -0.0067159 -0.14129"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link65" />
     <axis
-      xyz="1 0 0" />rostopic pub -1 /swivel/swiveljoint1_position_controller/command std_msgs/Float64 "data: 1.5"
+      xyz="1 0 0" />
     <limit
       lower="-2"
       upper="2"
@@ -1404,7 +1404,7 @@
       xyz="0.0075691 0.0068497 -0.041418"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link71" />
     <axis
@@ -1594,8 +1594,8 @@
   <joint
     name="joint703"
     type="revolute">
-    <pose relative_to = "base_link">0.010242 -0.00015498 -0.14584 0 1.5184 0</pose>
-    <parent>base_link</parent>
+    <pose relative_to = "hand_base_link">0.010242 -0.00015498 -0.14584 0 1.5184 0</pose>
+    <parent>hand_base_link</parent>
     <child>Link73</child>
     <axis>0.05237 0 0.99863</axis>
     <limit
@@ -1653,7 +1653,7 @@
       xyz="0.010545 -0.0067159 -0.14112"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link75" />
     <axis
@@ -1733,7 +1733,7 @@
       xyz="0.024584 0.0068497 -0.040053"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link81" />
     <axis
@@ -1923,8 +1923,8 @@
   <joint
     name="joint803"
     type="revolute">
-    <pose relative_to = "base_link">0.032671 -0.00015498 -0.14378 0 1.4661 0</pose>
-    <parent>base_link</parent>
+    <pose relative_to = "hand_base_link">0.032671 -0.00015498 -0.14378 0 1.4661 0</pose>
+    <parent>hand_base_link</parent>
     <child>Link83</child>
     <axis>0 0 -1</axis>
     <limit
@@ -1982,7 +1982,7 @@
       xyz="0.032726 -0.0067159 -0.13905"
       rpy="0 0 0" />
     <parent
-      link="base_link" />
+      link="hand_base_link" />
     <child
       link="Link85" />
     <axis
@@ -2005,8 +2005,7 @@
     <limit
       lower="-2"
       upper="2"
-      effort="50"
-      velocity="1" />
+      effort="50"      velocity="1" />
   </joint>
   </gazebo>
   

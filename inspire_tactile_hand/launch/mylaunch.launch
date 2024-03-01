@@ -18,23 +18,35 @@
     </include>
 
     <!-- 导入urdf文件，第一个参数修改为功能包名，第二个参数修改为urdf文件的路径 -->
-    <param name="inspire_tactile_hand" command="cat '$(find inspire_tactile_hand)/urdf/inspire_tactile_hand.urdf'" />
+    <!-- <param name="inspire_tactile_hand" command="cat '$(find inspire_tactile_hand)/urdf/inspire_tactile_hand.urdf'" /> -->
+    <param name="inspire_tactile_hand" command="cat '$(find inspire_tactile_hand)/urdf/ur5_inspire_hand.urdf'" />
     
-    <param name="robot_description" textfile="$(find inspire_tactile_hand)/urdf/inspire_tactile_hand.urdf" />
+    <!-- <param name="robot_description" textfile="$(find inspire_tactile_hand)/urdf/inspire_tactile_hand.urdf" /> -->
+    <param name="robot_description" textfile="$(find inspire_tactile_hand)/urdf/ur5_inspire_hand.urdf" />
 
     <!-- 导入spawn_urdf节点，使Gazebo能够识别urdf文件。需要修改的参数为功能包的路径 -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param /inspire_tactile_hand -urdf -model inspire_tactile_hand" />
     
     <rosparam
       file="$(find inspire_tactile_hand)/config/swivel_control.yaml"
-      command="load"/>
+      command="load"
+    />
+
+    <!-- 启动robot_state_publisher来发布关节状态 -->
+    
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <param name="publish_frequency" value="50.0" />
+      <remap from="joint_states" to="/ur5_inspire/joint_states" />
+    </node>
+
     <node
       name="controller_spawner"
       pkg="controller_manager"
       type="spawner"
       respawn="false"
       output="screen"
-      ns="/swivel"
-      args="swiveljoint_state_controller swiveljoint1_position_controller swiveljoint2_position_controller swiveljoint3_position_controller swiveljoint4_position_controller swiveljoint5_position_controller swiveljoint6_position_controller"/>
-  </launch>
+      ns="/ur5_inspire"
+      args="joint_state_controller joint1_position_controller joint2_position_controller joint3_position_controller joint4_position_controller joint5_position_controller joint6_position_controller eff_joint_traj_controller"
+    />
 
+  </launch>

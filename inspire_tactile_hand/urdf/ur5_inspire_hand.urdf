@@ -1,0 +1,2472 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="ur5_inspire_hand">
+
+    <!-- define the ur5's position and orientation in the world coordinate system -->
+    <link name="world" />
+
+    <!-- UR5 World connection -->
+    <joint name="world_joint" type="fixed">
+        <parent link="world" />
+        <child link="base_link" />
+        <!-- TODO: check base_link name of robot -->
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    </joint>
+
+    <!-- UR5 Hand connections -->
+    <joint name="hand_joint" type="fixed">
+        <parent link="ee_link" />
+        <child link="hand_base_link" />
+        <origin rpy="0.0 -1.57079633 0.0" xyz="0.0 0.0 0.0" />
+    </joint>
+
+    <!-- UR5 robot -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/visual/base.dae" />
+            </geometry>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/collision/base.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="4.0" />
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.0" />
+            <inertia ixx="0.00443333156" ixy="0.0" ixz="0.0" iyy="0.00443333156" iyz="0.0"
+                izz="0.0072" />
+        </inertial>
+    </link>
+    <joint name="shoulder_pan_joint" type="revolute">
+        <parent link="base_link" />
+        <child link="shoulder_link" />
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.089159" />
+        <axis xyz="0 0 1" />
+        <limit effort="150.0" lower="-3.14159265" upper="3.14159265" velocity="3.15" />
+        <dynamics damping="0.0" friction="0.0" />
+    </joint>
+    <link name="shoulder_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/visual/shoulder.dae" />
+            </geometry>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/collision/shoulder.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="3.7" />
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.0" />
+            <inertia ixx="0.010267495893" ixy="0.0" ixz="0.0" iyy="0.010267495893" iyz="0.0"
+                izz="0.00666" />
+        </inertial>
+    </link>
+    <joint name="shoulder_lift_joint" type="revolute">
+        <parent link="shoulder_link" />
+        <child link="upper_arm_link" />
+        <origin rpy="0.0 1.570796325 0.0" xyz="0.0 0.13585 0.0" />
+        <axis xyz="0 1 0" />
+        <limit effort="150.0" lower="-3.14159265" upper="3.14159265" velocity="3.15" />
+        <dynamics damping="0.0" friction="0.0" />
+    </joint>
+    <link name="upper_arm_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/visual/upperarm.dae" />
+            </geometry>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/collision/upperarm.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="8.393" />
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.28" />
+            <inertia ixx="0.22689067591" ixy="0.0" ixz="0.0" iyy="0.22689067591" iyz="0.0"
+                izz="0.0151074" />
+        </inertial>
+    </link>
+    <joint name="elbow_joint" type="revolute">
+        <parent link="upper_arm_link" />
+        <child link="forearm_link" />
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 -0.1197 0.425" />
+        <axis xyz="0 1 0" />
+        <limit effort="150.0" lower="-3.14159265" upper="3.14159265" velocity="3.15" />
+        <dynamics damping="0.0" friction="0.0" />
+    </joint>
+    <link name="forearm_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/visual/forearm.dae" />
+            </geometry>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/collision/forearm.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2.275" />
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.25" />
+            <inertia ixx="0.049443313556" ixy="0.0" ixz="0.0" iyy="0.049443313556" iyz="0.0"
+                izz="0.004095" />
+        </inertial>
+    </link>
+    <joint name="wrist_1_joint" type="revolute">
+        <parent link="forearm_link" />
+        <child link="wrist_1_link" />
+        <origin rpy="0.0 1.570796325 0.0" xyz="0.0 0.0 0.39225" />
+        <axis xyz="0 1 0" />
+        <limit effort="28.0" lower="-3.14159265" upper="3.14159265" velocity="3.2" />
+        <dynamics damping="0.0" friction="0.0" />
+    </joint>
+    <link name="wrist_1_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/visual/wrist1.dae" />
+            </geometry>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/collision/wrist1.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.219" />
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.0" />
+            <inertia ixx="0.111172755531" ixy="0.0" ixz="0.0" iyy="0.111172755531" iyz="0.0"
+                izz="0.21942" />
+        </inertial>
+    </link>
+    <joint name="wrist_2_joint" type="revolute">
+        <parent link="wrist_1_link" />
+        <child link="wrist_2_link" />
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.093 0.0" />
+        <axis xyz="0 0 1" />
+        <limit effort="28.0" lower="-3.14159265" upper="3.14159265" velocity="3.2" />
+        <dynamics damping="0.0" friction="0.0" />
+    </joint>
+    <link name="wrist_2_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/visual/wrist2.dae" />
+            </geometry>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/collision/wrist2.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.219" />
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.0" />
+            <inertia ixx="0.111172755531" ixy="0.0" ixz="0.0" iyy="0.111172755531" iyz="0.0"
+                izz="0.21942" />
+        </inertial>
+    </link>
+    <joint name="wrist_3_joint" type="revolute">
+        <parent link="wrist_2_link" />
+        <child link="wrist_3_link" />
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.09465" />
+        <axis xyz="0 1 0" />
+        <limit effort="28.0" lower="-3.14159265" upper="3.14159265" velocity="3.2" />
+        <dynamics damping="0.0" friction="0.0" />
+    </joint>
+    <link name="wrist_3_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/visual/wrist3.dae" />
+            </geometry>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://ur_description/meshes/ur5/collision/wrist3.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1879" />
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.0" />
+            <inertia ixx="0.0171364731454" ixy="0.0" ixz="0.0" iyy="0.0171364731454" iyz="0.0"
+                izz="0.033822" />
+        </inertial>
+    </link>
+    <joint name="ee_fixed_joint" type="fixed">
+        <parent link="wrist_3_link" />
+        <child link="ee_link" />
+        <origin rpy="0.0 0.0 1.570796325" xyz="0.0 0.0823 0.0" />
+    </joint>
+    <link name="ee_link">
+        <collision>
+            <geometry>
+                <box size="0.01 0.01 0.01" />
+            </geometry>
+            <origin rpy="0 0 0" xyz="-0.01 0 0" />
+        </collision>
+    </link>
+
+
+    <!-- INSPIRE hand -->
+    <link
+        name="hand_base_link">
+        <inertial>
+            <origin
+                xyz="0.00040789 0.0043672 -0.042773"
+                rpy="0 0 0" />
+            <mass
+                value="0.091809" />
+            <inertia
+                ixx="5.4116E-05"
+                ixy="4.0634E-07"
+                ixz="-1.041E-06"
+                iyy="0.00010076"
+                iyz="-4.6185E-07"
+                izz="9.0663E-05" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/base_link.STL" />
+            </geometry>
+            <material
+                name="">
+                <color>1 1 1 0.5</color>
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/base_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <link
+        name="Link01">
+        <inertial>
+            <origin
+                xyz="-0.0013075 0.00095537 -0.037441"
+                rpy="0 0 0" />
+            <mass
+                value="0.010228" />
+            <inertia
+                ixx="4.5019E-06"
+                ixy="1.389E-09"
+                ixz="-1.4756E-07"
+                iyy="4.4556E-06"
+                iyz="3.959E-08"
+                izz="2.8134E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link01.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.89412 0.91373 0.92941 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link01.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint001"
+        type="revolute">
+        <origin
+            xyz="-0.028069 0.0068497 -0.041587"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link01" />
+        <axis
+            xyz="0.99939 0 -0.034899" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link02">
+        <inertial>
+            <origin
+                xyz="-0.00039499 -0.00011147 -0.011311"
+                rpy="0 0 0" />
+            <mass
+                value="0.00096478" />
+            <inertia
+                ixx="6.7477E-08"
+                ixy="-2.0942E-11"
+                ixz="-2.1362E-09"
+                iyy="6.7215E-08"
+                iyz="-5.9961E-10"
+                izz="6.3805E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link02.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link02.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint012"
+        type="prismatic">
+        <origin
+            xyz="-0.0024717 -0.00069757 -0.07078"
+            rpy="0 0 0" />
+        <parent
+            link="Link01" />
+        <child
+            link="Link02" />
+        <axis
+            xyz="-0.034898 -0.009849 -0.99934" />
+        <limit
+            lower="-0.001"
+            upper="0.0089"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link03">
+        <inertial>
+            <origin
+                xyz="0.0024223 -0.0078624 -0.016577"
+                rpy="0 0 0" />
+            <mass
+                value="0.0090333" />
+            <inertia
+                ixx="1.768E-06"
+                ixy="-7.9691E-09"
+                ixz="-3.4656E-08"
+                iyy="1.7729E-06"
+                iyz="-2.2807E-07"
+                izz="7.7843E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link03.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.77647 0.75686 0.73725 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link03.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint023"
+        type="revolute">
+        <origin
+            xyz="-0.0040346 -0.00029252 -0.029576"
+            rpy="0 0 0" />
+        <parent
+            link="Link02" />
+        <child
+            link="Link03" />
+        <axis
+            xyz="-0.99939 0 0.034899" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link04">
+        <inertial>
+            <origin
+                xyz="0.0025725 -0.0077235 -0.02232"
+                rpy="0 0 0" />
+            <mass
+                value="0.014494" />
+            <inertia
+                ixx="2.7886E-06"
+                ixy="-2.9364E-08"
+                ixz="-5.5659E-08"
+                iyy="2.2885E-06"
+                iyz="-8.4296E-07"
+                izz="1.196E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link04.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.61569 0.64314 0.67451 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link04.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint034"
+        type="revolute">
+        <origin
+            xyz="-0.0016841 -0.017353 -0.038198"
+            rpy="0 0 0" />
+        <parent
+            link="Link03" />
+        <child
+            link="Link04" />
+        <axis
+            xyz="0.99939 0 -0.034899" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint003"
+            type="revolute">
+            <pose relative_to="hand_base_link">-0.0345 -0.00015498 -0.14553 0 -1.5359 0</pose>
+            <parent>hand_base_link</parent>
+            <child>Link03</child>
+            <axis>0 0 1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+    <link
+        name="Link05">
+        <inertial>
+            <origin
+                xyz="0.0016013 0.0014238 -0.018617"
+                rpy="0 0 0" />
+            <mass
+                value="0.00069948" />
+            <inertia
+                ixx="1.2081E-07"
+                ixy="3.317E-10"
+                ixz="-4.1019E-09"
+                iyy="1.2037E-07"
+                iyz="9.4987E-09"
+                izz="3.4934E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link05.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link05.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint005"
+        type="revolute">
+        <origin
+            xyz="-0.033786 -0.0067159 -0.14085"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link05" />
+        <axis
+            xyz="0.99939 0 -0.034899" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint054"
+            type="revolute">
+            <pose relative_to="Link05">-0.0032193 0.0026583 -0.036313 0 -1.5359 0</pose>
+            <parent>Link05</parent>
+            <child>Link04</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+
+    <link
+        name="Link41">
+        <inertial>
+            <origin
+                xyz="-0.02607 -0.00010211 -0.0060545"
+                rpy="0 0 0" />
+            <mass
+                value="0.010429" />
+            <inertia
+                ixx="7.6968E-07"
+                ixy="-6.219E-09"
+                ixz="-2.9412E-08"
+                iyy="2.3567E-06"
+                iyz="-1.1747E-10"
+                izz="1.8027E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link41.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.75294 0.75294 0.75294 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link41.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint401"
+        type="revolute">
+        <origin
+            xyz="0.033577 -0.0119 -0.04755"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link41" />
+        <axis
+            xyz="0 0 1" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link42">
+        <inertial>
+            <origin
+                xyz="-0.01074 -4.2071E-05 3.1818E-10"
+                rpy="0 0 0" />
+            <mass
+                value="0.0006939" />
+            <inertia
+                ixx="6.1418E-09"
+                ixy="-5.4783E-11"
+                ixz="1.3215E-15"
+                iyy="2.0129E-08"
+                iyz="1.3405E-17"
+                izz="2.0374E-08" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link42.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.77647 0.75686 0.73725 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link42.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint412"
+        type="prismatic">
+        <origin
+            xyz="-0.047038 -0.00018427 0"
+            rpy="0 0 0" />
+        <parent
+            link="Link41" />
+        <child
+            link="Link42" />
+        <axis
+            xyz="0.99999 0.0039175 0" />
+        <limit
+            lower="-0.0027"
+            upper="0.006"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link43">
+        <inertial>
+            <origin
+                xyz="-0.00093154 -0.012832 0.0053322"
+                rpy="0 0 0" />
+            <mass
+                value="0.0020853" />
+            <inertia
+                ixx="1.1253E-07"
+                ixy="-6.7093E-09"
+                ixz="-1.4985E-09"
+                iyy="7.7841E-08"
+                iyz="-5.6524E-09"
+                izz="8.0107E-08" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link43.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.82745 0.83922 0.82745 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link43.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint423"
+        type="revolute">
+        <origin
+            xyz="-0.01625 -6.3659E-05 -0.0065"
+            rpy="0 0 0" />
+        <parent
+            link="Link42" />
+        <child
+            link="Link43" />
+        <axis
+            xyz="0 0 1" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link44">
+        <inertial>
+            <origin
+                xyz="-0.0043015 -0.022596 -0.023668"
+                rpy="0 0 0" />
+            <mass
+                value="0.010572" />
+            <inertia
+                ixx="6.7103E-06"
+                ixy="-8.3093E-07"
+                ixz="-8.5679E-07"
+                iyy="5.2737E-06"
+                iyz="-1.8755E-06"
+                izz="3.1575E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link44.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="1 0.66667 0.090196 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link44.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint434"
+        type="revolute">
+        <origin
+            xyz="-0.0078317 -0.015666 0.0069"
+            rpy="0 0 0" />
+        <parent
+            link="Link43" />
+        <child
+            link="Link44" />
+        <axis
+            xyz="-0.90914 0.4165 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link45">
+        <inertial>
+            <origin
+                xyz="-0.0052468 -0.011453 -0.023466"
+                rpy="0 0 0" />
+            <mass
+                value="0.010821" />
+            <inertia
+                ixx="2.2232E-06"
+                ixy="-3.6867E-07"
+                ixz="-2.11E-07"
+                iyy="1.5873E-06"
+                iyz="-4.6058E-07"
+                izz="1.193E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link45.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link45.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint445"
+        type="revolute">
+        <origin
+            xyz="0.00088606 -0.011271 -0.00010738"
+            rpy="0 0 0" />
+        <parent
+            link="Link44" />
+        <child
+            link="Link45" />
+        <axis
+            xyz="0.90914 -0.4165 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link46">
+        <inertial>
+            <origin
+                xyz="-0.0015687 -0.0034242 -0.0043416"
+                rpy="0 0 0" />
+            <mass
+                value="0.00054209" />
+            <inertia
+                ixx="8.7659E-09"
+                ixy="-8.607E-10"
+                ixz="-1.0691E-09"
+                iyy="7.2814E-09"
+                iyz="-2.3337E-09"
+                izz="6.155E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link46.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.77647 0.75686 0.73725 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link46.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint456"
+        type="prismatic">
+        <origin
+            xyz="-0.013096 -0.028586 -0.036244"
+            rpy="0 0 0" />
+        <parent
+            link="Link45" />
+        <child
+            link="Link46" />
+        <axis
+            xyz="0.27293 0.59575 0.75537" />
+        <limit
+            lower="-0.0058"
+            upper="0.0042"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link47">
+        <inertial>
+            <origin
+                xyz="0.0033514 -0.00228 -0.016194"
+                rpy="0 0 0" />
+            <mass
+                value="0.0057253" />
+            <inertia
+                ixx="8.817E-07"
+                ixy="-2.5206E-08"
+                ixz="-2.7134E-08"
+                iyy="8.3807E-07"
+                iyz="-5.9117E-08"
+                izz="5.0904E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link47.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link47.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint467"
+        type="revolute">
+        <origin
+            xyz="-0.0077305 -0.0072703 -0.011331"
+            rpy="0 0 0" />
+        <parent
+            link="Link46" />
+        <child
+            link="Link47" />
+        <axis
+            xyz="-0.90914 0.4165 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link48">
+        <inertial>
+            <origin
+                xyz="0.0025446 -0.0064579 -0.013497"
+                rpy="0 0 0" />
+            <mass
+                value="0.0085167" />
+            <inertia
+                ixx="7.8199E-07"
+                ixy="-1.7948E-09"
+                ixz="-1.5676E-08"
+                iyy="7.7878E-07"
+                iyz="-3.332E-08"
+                izz="4.227E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link48.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link48.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint478"
+        type="revolute">
+        <origin
+            xyz="-0.0026009 -0.0032704 -0.035056"
+            rpy="0 0 0" />
+        <parent
+            link="Link47" />
+        <child
+            link="Link48" />
+        <axis
+            xyz="-0.90914 0.4165 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link49">
+        <inertial>
+            <origin
+                xyz="-0.0036703 -0.013894 -0.011545"
+                rpy="0 0 0" />
+            <mass
+                value="0.00041351" />
+            <inertia
+                ixx="6.5362E-08"
+                ixy="-1.646E-08"
+                ixz="-1.4617E-08"
+                iyy="3.6973E-08"
+                iyz="-3.1907E-08"
+                izz="4.5125E-08" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link49.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.61569 0.64314 0.67451 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link49.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint449"
+        type="revolute">
+        <origin
+            xyz="-0.010887 -0.031082 -0.056915"
+            rpy="0 0 0" />
+        <parent
+            link="Link44" />
+        <child
+            link="Link49" />
+        <axis
+            xyz="0.90914 -0.4165 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint498"
+            type="revolute">
+            <pose relative_to="Link49">-0.013754 -0.0239 -0.022185 0.42959 1.5708 0</pose>
+            <parent>Link49</parent>
+            <child>Link48</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+    <gazebo>
+        <joint
+            name="joint447"
+            type="revolute">
+            <pose relative_to="Link44">-0.017556 -0.038119 -0.058998 0.42959 1.5708 0</pose>
+            <parent>Link44</parent>
+            <child>Link47</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+    <link
+        name="Link50">
+        <inertial>
+            <origin
+                xyz="-0.0099913 -0.02301 -0.021601"
+                rpy="0 0 0" />
+            <mass
+                value="0.00041134" />
+            <inertia
+                ixx="1.4792E-07"
+                ixy="-3.562E-08"
+                ixz="-3.331E-08"
+                iyy="8.6481E-08"
+                iyz="-7.2709E-08"
+                izz="9.414E-08" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link50.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.52157 0.49804 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link50.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint4350"
+        type="revolute">
+        <origin
+            xyz="-0.0076736 -0.01292 -0.0026627"
+            rpy="0 0 0" />
+        <parent
+            link="Link43" />
+        <child
+            link="Link50" />
+        <axis
+            xyz="0.90914 -0.4165 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint5047"
+            type="revolute">
+            <pose relative_to="Link50">-0.019983 -0.046019 -0.043201 2.712 -1.5708 0</pose>
+            <parent>Link50</parent>
+            <child>Link47</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+    <gazebo>
+        <joint
+            name="joint0043"
+            type="revolute">
+            <pose relative_to="hand_base_link">-0.027753 -0.01965 -0.04105 0 0 0</pose>
+            <parent>hand_base_link</parent>
+            <child>Link43</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+
+    <link
+        name="Link61">
+        <inertial>
+            <origin
+                xyz="-5.8081E-09 0.00096977 -0.037464"
+                rpy="0 0 0" />
+            <mass
+                value="0.010228" />
+            <inertia
+                ixx="4.507E-06"
+                ixy="6.4862E-12"
+                ixz="2.1739E-12"
+                iyy="4.4556E-06"
+                iyz="4.1221E-08"
+                izz="2.7622E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link61.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.89412 0.91373 0.92941 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link61.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint601"
+        type="revolute">
+        <origin
+            xyz="-0.0093101 0.0068497 -0.0419"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link61" />
+        <axis
+            xyz="1 0 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link62">
+        <inertial>
+            <origin
+                xyz="8.9543E-11 -0.00010713 -0.011318"
+                rpy="0 0 0" />
+            <mass
+                value="0.00096478" />
+            <inertia
+                ixx="6.7552E-08"
+                ixy="-3.0314E-15"
+                ixz="1.5268E-15"
+                iyy="6.7216E-08"
+                iyz="-5.7659E-10"
+                izz="6.3055E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link62.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link62.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint612"
+        type="prismatic">
+        <origin
+            xyz="0 -0.00067089 -0.07088"
+            rpy="0 0 0" />
+        <parent
+            link="Link61" />
+        <child
+            link="Link62" />
+        <axis
+            xyz="0 -0.0094647 -0.99996" />
+        <limit
+            lower="-0.001"
+            upper="0.00875"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link63">
+        <inertial>
+            <origin
+                xyz="0.0029993 -0.0080389 -0.016397"
+                rpy="0 0 0" />
+            <mass
+                value="0.0090333" />
+            <inertia
+                ixx="1.7692E-06"
+                ixy="-4.4344E-12"
+                ixz="-5.4693E-11"
+                iyy="1.7679E-06"
+                iyz="-2.3885E-07"
+                izz="7.8224E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link63.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.77647 0.75686 0.73725 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link63.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint623"
+        type="revolute">
+        <origin
+            xyz="-0.003 -0.0002811 -0.029699"
+            rpy="0 0 0" />
+        <parent
+            link="Link62" />
+        <child
+            link="Link63" />
+        <axis
+            xyz="-1 0 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link64">
+        <inertial>
+            <origin
+                xyz="0.0044999 -0.0081547 -0.022062"
+                rpy="0 0 0" />
+            <mass
+                value="0.014494" />
+            <inertia
+                ixx="2.7905E-06"
+                ixy="7.3203E-11"
+                ixz="2.4362E-11"
+                iyy="2.2552E-06"
+                iyz="-8.6414E-07"
+                izz="1.2273E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link64.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.61569 0.64314 0.67451 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link64.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint634"
+        type="revolute">
+        <origin
+            xyz="-0.0015 -0.017763 -0.038045"
+            rpy="0 0 0" />
+        <parent
+            link="Link63" />
+        <child
+            link="Link64" />
+        <axis
+            xyz="1 0 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint603"
+            type="revolute">
+            <pose relative_to="hand_base_link">-0.01231 -0.00015498 -0.146 0 1.5708 0</pose>
+            <parent>hand_base_link</parent>
+            <child>Link63</child>
+            <axis>0 0 1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+    <link
+        name="Link65">
+        <inertial>
+            <origin
+                xyz="0.00225 0.0012631 -0.018561"
+                rpy="0 0 0" />
+            <mass
+                value="0.00069948" />
+            <inertia
+                ixx="1.2096E-07"
+                ixy="-9.2445E-19"
+                ixz="5.4764E-18"
+                iyy="1.2053E-07"
+                iyz="8.49E-09"
+                izz="3.1944E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link65.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link65.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint605"
+        type="revolute">
+        <origin
+            xyz="-0.01156 -0.0067159 -0.14129"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link65" />
+        <axis
+            xyz="1 0 0" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint654"
+            type="revolute">
+            <pose relative_to="Link65">0 0.002343 -0.036425 3.1416 -1.5708 0</pose>
+            <parent>Link65</parent>
+            <child>Link64</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+
+    <link
+        name="Link71">
+        <inertial>
+            <origin
+                xyz="0.0019618 0.0011225 -0.037408"
+                rpy="0 0 0" />
+            <mass
+                value="0.010228" />
+            <inertia
+                ixx="4.4954E-06"
+                ixy="-3.0443E-09"
+                ixz="2.2125E-07"
+                iyy="4.4552E-06"
+                iyz="5.8174E-08"
+                izz="2.8823E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link71.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.89412 0.91373 0.92941 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link71.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint701"
+        type="revolute">
+        <origin
+            xyz="0.0075691 0.0068497 -0.041418"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link71" />
+        <axis
+            xyz="0.99863 0 0.05237" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link72">
+        <inertial>
+            <origin
+                xyz="0.00059274 -6.0994E-05 -0.011303"
+                rpy="0 0 0" />
+            <mass
+                value="0.00096478" />
+            <inertia
+                ixx="6.7384E-08"
+                ixy="1.719E-11"
+                ixz="3.2033E-09"
+                iyy="6.722E-08"
+                iyz="-3.2784E-10"
+                izz="6.4698E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link72.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link72.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint712"
+        type="prismatic">
+        <origin
+            xyz="0.0037717 -0.00038812 -0.07192"
+            rpy="0 0 0" />
+        <parent
+            link="Link71" />
+        <child
+            link="Link72" />
+        <axis
+            xyz="0.05237 -0.005389 -0.99861" />
+        <limit
+            lower="-0.0015"
+            upper="0.0083"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link73">
+        <inertial>
+            <origin
+                xyz="0.0038023 -0.0094406 -0.015218"
+                rpy="0 0 0" />
+            <mass
+                value="0.0090332" />
+            <inertia
+                ixx="1.7667E-06"
+                ixy="1.6357E-08"
+                ixz="4.9311E-08"
+                iyy="1.7247E-06"
+                iyz="-3.1204E-07"
+                izz="8.28E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link73.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.77647 0.75686 0.73725 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link73.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint723"
+        type="revolute">
+        <origin
+            xyz="-0.0014405 -0.00016005 -0.029816"
+            rpy="0 0 0" />
+        <parent
+            link="Link72" />
+        <child
+            link="Link73" />
+        <axis
+            xyz="-0.99863 0 -0.05237" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link74">
+        <inertial>
+            <origin
+                xyz="0.0052769 -0.01121 -0.02043"
+                rpy="0 0 0" />
+            <mass
+                value="0.014495" />
+            <inertia
+                ixx="2.7871E-06"
+                ixy="5.1066E-08"
+                ixz="6.7946E-08"
+                iyy="1.9912E-06"
+                iyz="-9.7258E-07"
+                izz="1.495E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link74.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.61569 0.64314 0.67451 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link74.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint734"
+        type="revolute">
+        <origin
+            xyz="0.00069906 -0.020824 -0.036228"
+            rpy="0 0 0" />
+        <parent
+            link="Link73" />
+        <child
+            link="Link74" />
+        <axis
+            xyz="0.99863 0 0.05237" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint703"
+            type="revolute">
+            <pose relative_to="hand_base_link">0.010242 -0.00015498 -0.14584 0 1.5184 0</pose>
+            <parent>hand_base_link</parent>
+            <child>Link73</child>
+            <axis>0.05237 0 0.99863</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+    <link
+        name="Link75">
+        <inertial>
+            <origin
+                xyz="0.0032212 7.3093E-05 -0.018461"
+                rpy="0 0 0" />
+            <mass
+                value="0.00069948" />
+            <inertia
+                ixx="1.2063E-07"
+                ixy="-4.8676E-11"
+                ixz="6.1904E-09"
+                iyy="1.2113E-07"
+                iyz="9.2819E-10"
+                izz="2.9152E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link75.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link75.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint705"
+        type="revolute">
+        <origin
+            xyz="0.010545 -0.0067159 -0.14112"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link75" />
+        <axis
+            xyz="0.99863 0 0.05237" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint754"
+            type="revolute">
+            <pose relative_to="Link75">-3.5806E-05 0 -0.036552 -3.1416 -1.5184 3.1416</pose>
+            <parent>Link75</parent>
+            <child>Link74</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+
+    <link
+        name="Link81">
+        <inertial>
+            <origin
+                xyz="0.0039155 0.0011531 -0.037253"
+                rpy="0 0 0" />
+            <mass
+                value="0.010228" />
+            <inertia
+                ixx="4.4608E-06"
+                ixy="-6.44E-09"
+                ixz="4.3977E-07"
+                iyy="4.4551E-06"
+                iyz="6.1335E-08"
+                izz="3.2294E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link81.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.89412 0.91373 0.92941 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link81.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint801"
+        type="revolute">
+        <origin
+            xyz="0.024584 0.0068497 -0.040053"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link81" />
+        <axis
+            xyz="0.99452 0 0.10453" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link82">
+        <inertial>
+            <origin
+                xyz="0.0011831 -5.1734E-05 -0.011256"
+                rpy="0 0 0" />
+            <mass
+                value="0.00096478" />
+            <inertia
+                ixx="6.6883E-08"
+                ixy="2.9102E-11"
+                ixz="6.3674E-09"
+                iyy="6.722E-08"
+                iyz="-2.7692E-10"
+                izz="6.9705E-09" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link82.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.8902 0.8902 0.91373 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link82.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint812"
+        type="prismatic">
+        <origin
+            xyz="0.0075062 -0.00032824 -0.071417"
+            rpy="0 0 0" />
+        <parent
+            link="Link81" />
+        <child
+            link="Link82" />
+        <axis
+            xyz="0.10453 -0.0045708 -0.99451" />
+        <limit
+            lower="-0.002"
+            upper="0.0079"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link83">
+        <inertial>
+            <origin
+                xyz="0.0045388 -0.010579 -0.01449"
+                rpy="0 0 0" />
+            <mass
+                value="0.0090332" />
+            <inertia
+                ixx="1.7596E-06"
+                ixy="4.0057E-08"
+                ixz="9.1983E-08"
+                iyy="1.6662E-06"
+                iyz="-3.8124E-07"
+                izz="8.936E-07" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link83.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.89804 0.91765 0.92941 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link83.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint823"
+        type="revolute">
+        <origin
+            xyz="0.0001209 -0.00013575 -0.029851"
+            rpy="0 0 0" />
+        <parent
+            link="Link82" />
+        <child
+            link="Link83" />
+        <axis
+            xyz="-0.99452 0 -0.10453" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+    <link
+        name="Link84">
+        <inertial>
+            <origin
+                xyz="0.0061306 -0.014278 -0.018151"
+                rpy="0 0 0" />
+            <mass
+                value="0.014495" />
+            <inertia
+                ixx="2.7798E-06"
+                ixy="1.0497E-07"
+                ixz="1.0281E-07"
+                iyy="1.6811E-06"
+                iyz="-9.9816E-07"
+                izz="1.8124E-06" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link84.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="0.61569 0.64314 0.67451 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link84.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint834"
+        type="revolute">
+        <origin
+            xyz="0.0024318 -0.023668 -0.034617"
+            rpy="0 0 0" />
+        <parent
+            link="Link83" />
+        <child
+            link="Link84" />
+        <axis
+            xyz="0.99452 0 0.10453" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint803"
+            type="revolute">
+            <pose relative_to="hand_base_link">0.032671 -0.00015498 -0.14378 0 1.4661 0</pose>
+            <parent>hand_base_link</parent>
+            <child>Link83</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50"
+                velocity="1" />
+        </joint>
+    </gazebo>
+
+    <link
+        name="Link85">
+        <inertial>
+            <origin
+                xyz="0.00040789 0.0043672 -0.042773"
+                rpy="0 0 0" />
+            <mass
+                value="0.091809" />
+            <inertia
+                ixx="5.4116E-05"
+                ixy="4.0634E-07"
+                ixz="-1.041E-06"
+                iyy="0.00010076"
+                iyz="-4.6185E-07"
+                izz="9.0663E-05" />
+        </inertial>
+        <visual>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link85.STL" />
+            </geometry>
+            <material
+                name="">
+                <color
+                    rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin
+                xyz="0 0 0"
+                rpy="0 0 0" />
+            <geometry>
+                <mesh
+                    filename="package://inspire_tactile_hand/meshes/Link85.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint
+        name="joint805"
+        type="revolute">
+        <origin
+            xyz="0.032726 -0.0067159 -0.13905"
+            rpy="0 0 0" />
+        <parent
+            link="hand_base_link" />
+        <child
+            link="Link85" />
+        <axis
+            xyz="0.99452 0 0.10453" />
+        <limit
+            lower="-2"
+            upper="2"
+            effort="50"
+            velocity="1" />
+    </joint>
+
+    <gazebo>
+        <joint
+            name="joint854"
+            type="revolute">
+            <pose relative_to="Link85">0.0018664 -0.0025804 -0.036413 -3.1416 -1.4661 3.1416</pose>
+            <parent>Link85</parent>
+            <child>Link84</child>
+            <axis>0 0 -1</axis>
+            <limit
+                lower="-2"
+                upper="2"
+                effort="50" velocity="1" />
+        </joint>
+    </gazebo>
+
+
+    <!-- Arm Actuation -->
+    <transmission name="ur5_shoulder_pan_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="shoulder_pan_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="ur5_shoulder_pan_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="ur5_shoulder_lift_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="shoulder_lift_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="ur5_shoulder_lift_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="ur5_elbow_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="elbow_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="ur5_elbow_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="ur5_wrist_1_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="wrist_1_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="ur5_wrist_1_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="ur5_wrist_2_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="wrist_2_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="ur5_wrist_2_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="ur5_wrist_3_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="wrist_3_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="ur5_wrist_3_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
+    <!-- Hand Actuation -->
+
+    <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint012">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <!-- lower="-0.001"
+            upper="0.0089" -->
+        <actuator name="motor1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint612">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <!-- lower="-0.001"
+            upper="0.00875" -->
+        <actuator name="motor2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint712">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <!-- lower="-0.0015"
+            upper="0.0083" -->
+        <actuator name="motor3">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran4">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint812">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <!-- lower="-0.002"
+            upper="0.0079" -->
+        <actuator name="motor4">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran5">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint412">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <!-- lower="-0.0027"
+            upper="0.006" -->
+        <actuator name="motor5">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran6">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint456">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <!-- lower="-0.0058"
+            upper="0.0042" -->
+        <actuator name="motor6">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <!-- ROS control plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/ur5_inspire</robotNamespace>
+            <controlPeriod>0.001</controlPeriod>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        </plugin>
+    </gazebo>
+
+    <!-- Disable gravity for inspire hand links -->
+    <!-- Link 01~05 -->
+    <gazebo reference="Link01">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link02">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link03">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link04">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link05">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <!-- Link 41~50 -->
+    <gazebo reference="Link41">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link42">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link43">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link44">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link45">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link46">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link47">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link48">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link49">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link50">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <!-- Link 61~65 -->
+    <gazebo reference="Link61">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link62">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link63">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link64">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link65">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <!-- Link 71~75 -->
+    <gazebo reference="Link71">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link72">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link73">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link74">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link75">
+        <gravity>false</gravity>
+    </gazebo>
+
+    <!-- Link 81~85 -->
+    <gazebo reference="Link81">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link82">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link83">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link84">
+        <gravity>false</gravity>
+    </gazebo>
+    <gazebo reference="Link85">
+        <gravity>false</gravity>
+    </gazebo>
+
+</robot>

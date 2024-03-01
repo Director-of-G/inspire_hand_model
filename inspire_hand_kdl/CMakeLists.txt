@@ -21,7 +21,9 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Eigen3 REQUIRED)
 find_package(orocos_kdl REQUIRED)
-find_package(Boost REQUIRED python38)
+
+# find_package(Boost REQUIRED python38)
+
 find_package(pinocchio REQUIRED)
 
 # find_package( Boost REQUIRED COMPONENTS
@@ -141,7 +143,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${orocos_kdl_INCLUDE_DIRS}
-  # ${pinocchio_INCLUDE_DIRS}
+  ${pinocchio_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
