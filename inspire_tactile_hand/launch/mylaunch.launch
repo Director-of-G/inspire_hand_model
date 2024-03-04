@@ -28,7 +28,7 @@
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param /inspire_tactile_hand -urdf -model inspire_tactile_hand" />
     
     <rosparam
-      file="$(find inspire_tactile_hand)/config/swivel_control.yaml"
+      file="$(find inspire_tactile_hand)/config/ur5_inspire_control.yaml"
       command="load"
     />
 
